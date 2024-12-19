@@ -4,6 +4,7 @@ import { BarraNavegacionComponent } from './barra-navegacion/barra-navegacion.co
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 import { ListaContrasenasComponent } from './lista-contrasenas/lista-contrasenas.component';
 const routes: Routes = [
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' }, // Ruta predeterminada
   {
     path: 'inicio', component: InicioSesionComponent
   },
