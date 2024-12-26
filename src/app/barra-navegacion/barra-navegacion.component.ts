@@ -8,7 +8,12 @@ import { AuthServiceService } from '../auth-service.service';
 })
 
 export class BarraNavegacionComponent {
-  constructor(public authService: AuthServiceService) { }
+  constructor(public authService: AuthServiceService) {
+
+
+
+    
+   }
 
 
 }

@@ -1,2 +1,32 @@
-<p>lista-contrasenas works!</p>
-<p id="idusuario">{{ idUserName }}</p>
+<div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Sitio</th>
+          <th>Usuario</th>
+          <th>Contraseña</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contrasena of contrasenas">
+            <td>{{ contrasena.sitio }}</td>
+            <td>{{ contrasena.usuario }}</td>
+            <td>{{ obtenerContrasena(contrasena) }}</td>
+            
+            <td>
+                <button mat-icon-button class="action-button" (click)="mostrarContrasena(contrasena)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+              <button mat-icon-button class="action-button" (click)="modificar(contrasena)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-button" (click)="borrar(contrasena)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    <p id="idusuario">{{ idUserName }}</p>
+  </div>
