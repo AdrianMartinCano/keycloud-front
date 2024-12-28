@@ -1,0 +1,4 @@
+nav {
+    width: 100%; /* Asegúrate de que el contenedor del SVG ocupe todo el ancho */
+    overflow: hidden; /* Opcional: para asegurarte de que no haya desbordamiento */
+  }

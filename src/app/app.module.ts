@@ -11,7 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModificarContrasenaComponent } from './modificar-contrasena/modificar-contrasena.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-
+import { SobreProyectoComponent } from './sobre-proyecto/sobre-proyecto.component';
+import { MatCardModule } from '@angular/material/card';
+import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
     InicioSesionComponent,
     ListaContrasenasComponent,
     ModificarContrasenaComponent,
+    SobreProyectoComponent,
+    CrearCuentaComponent,
 
   ],
   imports: [
@@ -27,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

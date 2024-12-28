@@ -1,9 +1,36 @@
-<nav>
-    <a href="/inicio" style="margin-right: 15px;">Inicio</a>
-    <a *ngIf="authService.isLoggedIn()" href="/listaContrasenas" style="margin-right: 15px;">Lista Contraseñas</a>
-    <a href="#services" style="margin-right: 15px;">Servicios</a>
-    <a href="#contact" style="margin-right: 15px;">Contacto</a>
-    <a href="https://www.google.com" style="margin-right: 15px;">Ejemplo</a>
-    <a href="https://www.yahoo.com" style="margin-right: 15px;">Otro Ejemplo</a>
-    <a href="/inicio" style="margin-right: 15px;">Cerrar sesión</a>
-</nav>
+<svg viewBox="0 0 1000 50" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+  <!-- Versión clara -->
+  <rect x="0" y="0" width="100%" height="50" fill="#ffffff" stroke="#e9ecef"/>
+  
+  <!-- Logo -->
+  <circle cx="40" cy="25" r="15" fill="#6c63ff" /> 
+  <path d="M30 25 L50 25 M40 15 L40 35" stroke="white" stroke-width="3"/>
+  <text x="70" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#212529">KeyCloud</text>
+
+  <image x="10" y="5" width="40" height="40" href="assets/images/logo_transparente.png" />
+  <!-- Enlaces de navegación -->
+  <text x="200" y="30" font-family="Arial" font-size="14" fill="#6c63ff" font-weight="bold">
+    <a href="/inicio" style="text-decoration: none; color: inherit;">Inicio</a>
+  </text>
+  <text x="250" y="30" font-family="Arial" font-size="14" fill="#6c757d">
+    <a href="/sobreProyecto" style="text-decoration: none; color: inherit;">Sobre el proyecto</a>
+  </text>
+  <text *ngIf="authService.isLoggedIn()" x="370" y="30" font-family="Arial" font-size="14" fill="#6c757d">
+    <a href="/listaContrasenas" style="text-decoration: none; color: inherit;">Lista Contraseñas</a>
+  </text>
+ 
+  <text *ngIf="authService.isLoggedIn(); else loginLink" x="900" y="30" font-family="Arial" font-size="14" fill="#dc3545">
+    <a href="/inicio" style="text-decoration: none; color: inherit;">Cerrar sesión</a>
+  </text>
+  <ng-template #loginLink>
+    <text x="900" y="30" font-family="Arial" font-size="14" fill="#6c757d">
+      <a href="/inicio" style="text-decoration: none; color: inherit;">Iniciar sesión</a>
+    </text>
+  </ng-template>
+  
+  <!-- 
+  <circle cx="680" cy="25" r="15" fill="#f8f9fa"/>
+  <text x="673" y="30" font-family="Arial" font-size="16" fill="#6c63ff">U</text>
+  <text x="710" y="30" font-family="Arial" font-size="14" fill="#212529">Usuario</text>
+  <path d="M750 20 L760 30 L750 40" fill="none" stroke="#6c757d" stroke-width="2"/>Área de usuario -->
+</svg>

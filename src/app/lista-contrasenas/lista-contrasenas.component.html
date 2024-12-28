@@ -10,23 +10,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let contrasena of contrasenas">
-            <td>{{ contrasena.sitio }}</td>
-            <td>{{ contrasena.usuario }}</td>
-            <td>{{ obtenerContrasena(contrasena) }}</td>
-            
-            <td>
-                <button mat-icon-button class="action-button" (click)="mostrarContrasena(contrasena)">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-              <button mat-icon-button class="action-button" (click)="modificar(contrasena)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button class="action-button" (click)="borrar(contrasena)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </tr>
+          <td>{{ contrasena.sitio }}</td>
+          <td>{{ contrasena.usuario }}</td>
+          <td>{{ obtenerContrasena(contrasena) }}</td>
+          <td>
+            <button mat-icon-button class="action-button" (click)="mostrarContrasena(contrasena)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button class="action-button" (click)="modificar(contrasena)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="action-button" (click)="borrar(contrasena)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button class="action-button" (click)="copiarAlPortapapeles(contrasena)">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
+    <p *ngIf="tiempoRestante > 0">Tiempo restante en el portapapeles: {{ tiempoRestante }} segundos</p>
     <p id="idusuario">{{ idUserName }}</p>
   </div>

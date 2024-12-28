@@ -11,7 +11,7 @@ import { EncriptacionService } from '../encriptacion.service';
 export class ListaContrasenasComponent implements OnInit {
   idUserName: string = '';
   contrasenas: { sitio: string, usuario: string, contrasena: string, visible?: boolean }[] = [];
-
+  tiempoRestante: number = 0;
   constructor(
     private authService: AuthServiceService,
     public dialog: MatDialog,
@@ -55,5 +55,27 @@ export class ListaContrasenasComponent implements OnInit {
 
   obtenerContrasena(contrasena: { sitio: string, usuario: string, contrasena: string, visible?: boolean }): string {
     return contrasena.visible ? this.encriptador.desencriptar(contrasena.contrasena) : '****';
+  }
+  copiarAlPortapapeles(contrasena: { sitio: string, usuario: string, contrasena: string }): void {
+    const decryptedPassword = this.encriptador.desencriptar(contrasena.contrasena);
+    navigator.clipboard.writeText(decryptedPassword).then(() => {
+      alert('Contraseña copiada al portapapeles');
+      
+      this.tiempoRestante = 20; // Inicializa el contador a 20 segundos
+      const interval = setInterval(() => {
+        this.tiempoRestante--;
+        if (this.tiempoRestante <= 0) {
+          clearInterval(interval);
+          navigator.clipboard.writeText('').then(() => {
+            console.log('Portapapeles borrado');
+          }).catch(err => {
+            console.error('Error al borrar el portapapeles: ', err);
+          });
+        }
+      }, 1000); // Actualiza el contador cada segundo
+
+    }).catch(err => {
+      console.error('Error al copiar al portapapeles: ', err);
+    });
   }
 }

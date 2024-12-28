@@ -1,11 +1,53 @@
-<div class="container">
-    <form class="formulario-inicio" (ngSubmit)="onLogin()">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" #usernameInput [(ngModel)]="username" name="username" required>
+<div class="auth-container">
+  <div class="auth-box">
+    <!-- Panel deslizante -->
+    <div class="sliding-panel" [@slidePanel]="isLoginActive ? 'login' : 'register'">
+      <div class="panel-content">
+        <h3>{{ isLoginActive ? '¿Eres nuevo?' : '¡Bienvenido de vuelta!' }}</h3>
+        <p>
+          {{ isLoginActive ? 
+            'Regístrate y comienza a gestionar tus contraseñas de forma segura' : 
+            'Inicia sesión para acceder a tus contraseñas guardadas' 
+          }}
+        </p>
+        <button (click)="toggleForm()">
+          {{ isLoginActive ? 'Crear cuenta' : 'Iniciar sesión' }}
+        </button>
+      </div>
+    </div>
 
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" #passwordInput [(ngModel)]="password" name="password" required>
+    <!-- Formularios -->
+    <div class="forms-container">
+      <!-- Login Form -->
+      <form [class.active]="isLoginActive" class="form login-form" (ngSubmit)="onSubmit($event)">
+        <h2>Iniciar Sesión</h2>
+        <div class="form-group">
+          <input type="email" placeholder="Email" [(ngModel)]="username" name="username" #usernameInput />
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" #passwordInput />
+        </div>
+        <button type="submit">Entrar</button>
+        <p class="forgot-password">¿Olvidaste tu contraseña?</p>
+      </form>
 
-        <button type="submit">Iniciar Sesión</button>
-    </form>
+      <!-- Register Form -->
+      <form [class.active]="!isLoginActive" class="form register-form" (ngSubmit)="onSubmit($event)">
+        <h2>Crear Cuenta</h2>
+        <div class="form-group">
+          <input type="text" placeholder="Nombre" [(ngModel)]="username" name="username" #usernameRegister />
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Email" [(ngModel)]="username" name="email" #emailRegister />
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" #passwordRegister />
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Confirmar contraseña" #passwordRepeatRegister />
+        </div>
+        <button type="submit">{{ isLoginActive ? 'Iniciar Sesión' : 'Registrarse' }}</button>
+      </form>
+    </div>
+  </div>
 </div>

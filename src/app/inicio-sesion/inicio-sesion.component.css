@@ -1,42 +1,149 @@
-/* Aquí puedes agregar tus estilos CSS */
-html,
-body {
-    height: 100%;
-    margin: 0;
-}
-
-.container {
+.auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    /* Ocupa toda la altura de la pantalla */
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    margin-top:-60px;
 }
 
-.formulario-inicio {
+.auth-box {
+    position: relative;
+    width: 1000px;
+    height: 500px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.sliding-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #6c63ff;
+    z-index: 2;
+    transition: transform 0.6s ease-in-out;
+}
+
+.panel-content {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    margin: auto;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem;
+    color: white;
+    text-align: center;
 }
 
-label {
-    margin-top: 10px;
+.panel-content h3 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
-input {
-    margin-bottom: 10px;
-    padding: 5px;
+.panel-content p {
+    margin-bottom: 2rem;
 }
 
-button {
-    padding: 10px;
-    background-color: #007bff;
+.panel-content button {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 9999px;
+    background: transparent;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.panel-content button:hover {
+    background: white;
+    color: #6c63ff;
+}
+
+.forms-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.form {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.form.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.login-form {
+    left: 50%;
+}
+
+.register-form {
+    left: 0;
+}
+
+.form h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input {
+    width: 80%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #6c63ff;
+}
+
+.form button {
+    width: 85%;
+    padding: 0.75rem;
+    background: #6c63ff;
     color: white;
     border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    
 }
 
-button:hover {
-    background-color: #0056b3;
+.form button:hover {
+    background: #5b52cc;
+    
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.875rem;
+    cursor: pointer;
 }
