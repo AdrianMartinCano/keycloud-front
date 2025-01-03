@@ -8,21 +8,23 @@ import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 import { ListaContrasenasComponent } from './lista-contrasenas/lista-contrasenas.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ModificarContrasenaComponent } from './modificar-contrasena/modificar-contrasena.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { SobreProyectoComponent } from './sobre-proyecto/sobre-proyecto.component';
 import { MatCardModule } from '@angular/material/card';
-import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SnackbarActionComponent } from './snackbar-action/snackbar-action.component';
 @NgModule({
   declarations: [
     AppComponent,
     BarraNavegacionComponent,
     InicioSesionComponent,
     ListaContrasenasComponent,
-    ModificarContrasenaComponent,
     SobreProyectoComponent,
-    CrearCuentaComponent,
+    SnackbarActionComponent,
+    
 
   ],
   imports: [
@@ -32,7 +34,10 @@ import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
     BrowserAnimationsModule,
     MatDialogModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

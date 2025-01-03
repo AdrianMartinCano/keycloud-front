@@ -5,10 +5,10 @@
       <div class="panel-content">
         <h3>{{ isLoginActive ? '¿Eres nuevo?' : '¡Bienvenido de vuelta!' }}</h3>
         <p>
-          {{ isLoginActive ? 
-            'Regístrate y comienza a gestionar tus contraseñas de forma segura' : 
-            'Inicia sesión para acceder a tus contraseñas guardadas' 
-          }}
+          {{ isLoginActive ?
+             'Regístrate y comienza a gestionar tus contraseñas de forma segura' :
+             'Inicia sesión para acceder a tus contraseñas guardadas'
+           }}
         </p>
         <button (click)="toggleForm()">
           {{ isLoginActive ? 'Crear cuenta' : 'Iniciar sesión' }}
@@ -22,10 +22,22 @@
       <form [class.active]="isLoginActive" class="form login-form" (ngSubmit)="onSubmit($event)">
         <h2>Iniciar Sesión</h2>
         <div class="form-group">
-          <input type="email" placeholder="Email" [(ngModel)]="username" name="username" #usernameInput />
+          <input 
+            type="email" 
+            placeholder="Nombre de usuario" 
+            [(ngModel)]="loginData.nombreUsuario" 
+            name="nombreUsuario" 
+            #usernameInput
+          />
         </div>
         <div class="form-group">
-          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" #passwordInput />
+          <input 
+            type="password" 
+            placeholder="Contraseña" 
+            [(ngModel)]="loginData.passwd" 
+            name="password" 
+            #passwordInput
+          />
         </div>
         <button type="submit">Entrar</button>
         <p class="forgot-password">¿Olvidaste tu contraseña?</p>
@@ -35,16 +47,40 @@
       <form [class.active]="!isLoginActive" class="form register-form" (ngSubmit)="onSubmit($event)">
         <h2>Crear Cuenta</h2>
         <div class="form-group">
-          <input type="text" placeholder="Nombre" [(ngModel)]="username" name="username" #usernameRegister />
+          <input 
+            type="text" 
+            placeholder="Nombre de usuario" 
+            [(ngModel)]="registerData.nombreUsuario" 
+            name="nombreUsuario" 
+            #usernameRegister
+          />
         </div>
         <div class="form-group">
-          <input type="email" placeholder="Email" [(ngModel)]="username" name="email" #emailRegister />
+          <input 
+            type="email" 
+            placeholder="Email" 
+            [(ngModel)]="registerData.email" 
+            name="email" 
+            #emailRegister
+          />
         </div>
         <div class="form-group">
-          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" #passwordRegister />
+          <input 
+            type="password" 
+            placeholder="Contraseña" 
+            [(ngModel)]="registerData.passwd" 
+            name="password" 
+            #passwordRegister
+          />
         </div>
         <div class="form-group">
-          <input type="password" placeholder="Confirmar contraseña" #passwordRepeatRegister />
+          <input 
+            type="password" 
+            placeholder="Confirmar contraseña" 
+            [(ngModel)]="registerData.confirmPasswd"
+            name="confirmPassword"
+            #passwordRepeatRegister
+          />
         </div>
         <button type="submit">{{ isLoginActive ? 'Iniciar Sesión' : 'Registrarse' }}</button>
       </form>

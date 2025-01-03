@@ -1,0 +1,24 @@
+.snackbar-content {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+    justify-content: space-between; /* Espacia los elementos horizontalmente */
+  }
+  
+  .snackbar-actions {
+    display: flex;
+    gap: 10px; /* Añade un margen entre los botones */
+  }
+  
+  .snackbar-button {
+    color: red;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+  }
+
+    .snackbar-button:hover {
+        text-decoration: underline;
+        color: white;
+    }

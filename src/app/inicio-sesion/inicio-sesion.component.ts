@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -20,25 +21,44 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ]
 })
 export class InicioSesionComponent {
-  username: string = '';
+  // Variables para el formulario de login
+  loginData = {
+    nombreUsuario: '',
+    passwd: ''
+  };
 
-  password: string = '';
+  // Variables para el formulario de registro
+  registerData = {
+    nombreUsuario: '',
+    email: '',
+    passwd: '',
+    confirmPasswd: ''
+  };
+
   isLoginActive = true;
 
-  @ViewChild('usernameInput') usernameInput!: ElementRef;
-  @ViewChild('passwordInput') passwordInput!: ElementRef;
-  @ViewChild('userNameRegister') userNameRegister!: ElementRef;
-  @ViewChild('emailRegister') emailRegister!: ElementRef;
-  @ViewChild('passwordRegister') passwordRegister!: ElementRef;
-  @ViewChild('passwordRepeatRegister') passwordRepeatRegister!: ElementRef;
-
-
-  @ViewChild('error') error!: ElementRef;
-  constructor(private authService: AuthServiceService, private router: Router) { }
-
+  constructor(
+    private authService: AuthServiceService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
+  ngOnInit(): void {
+    this.authService.logout();
+  }
   toggleForm() {
     this.isLoginActive = !this.isLoginActive;
-    console.log( this.isLoginActive)
+    // Limpiar los formularios al cambiar
+    this.loginData = {
+      nombreUsuario: '',
+      passwd: ''
+    };
+    this.registerData = {
+      nombreUsuario: '',
+      email: '',
+      passwd: '',
+      confirmPasswd: ''
+    };
+    
   }
 
   onSubmit(event: Event) {
@@ -50,36 +70,59 @@ export class InicioSesionComponent {
     }
   }
 
-
   login() {
-    if(this.isLoginActive)
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/listaContrasenas']);
-    } else {
-      this.usernameInput.nativeElement.value = '';
-      this.passwordInput.nativeElement.value = '';
-     
-      alert('Credenciales incorrectas');
-   
+    this.authService.login(this.loginData.nombreUsuario, this.loginData.passwd).subscribe(
+      success => {
+        if (success) {
+          this.router.navigate(['/listaContrasenas']);
+        } else {
+          this.mostrarError('Credenciales incorrectas');
+        }
+      },
+      error => {
+        
+        this.mostrarError('Error en el servidor, intenta nuevamente más tarde.');
+      }
+    );
+  }
 
-    }
+  mostrarError(mensaje: string) {
+    // Limpiamos los campos del formulario
+    this.loginData = {
+      nombreUsuario: '',
+      passwd: ''
+    };
+    this.snackBar.open(mensaje, 'Cerrar', { duration: 2000 });
+    
   }
 
   register() {
-    //alert('Usuario registrado con éxito');
-    if(this.passwordRegister.nativeElement.value != this.passwordRepeatRegister.nativeElement.value){
-      alert('Las contraseñas no coinciden');
+    if (this.registerData.passwd !== this.registerData.confirmPasswd) {
+      this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', { duration: 2000 });
+    
+      
       return;
     }
-    alert("Usuario: " + this.usernameInput.nativeElement.value + " Email: " + this.usernameInput.nativeElement.value + " Password: " + this.passwordRegister.nativeElement.value + " Password Repeat: " + this.passwordRepeatRegister.nativeElement.value);
+
+    
+
+
+    this.authService.register(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email).subscribe(
+      success => {
+        if (success) {
+          this.snackBar.open('Usuario registrado con éxito', 'Cerrar', { duration: 2000 });
+        
+        } else {
+          this.mostrarError('Ha habido algún problema al registrar el usuario');
+        }
+      },
+      error => {
+       
+        this.mostrarError('Error en el servidor, intenta nuevamente más tarde.');
+      }
+    );
+
     this.isLoginActive = true; // Cambia a modo login después del registro
-  /*  if (this.authService.register(this.username, this.password)) {
-      alert('Usuario registrado con éxito');
-      this.isLoginActive = true; // Cambia a modo login después del registro
-    } else {
-      alert('Error al registrar el usuario');
-    }*/
+
   }
-
-
-} 
+}

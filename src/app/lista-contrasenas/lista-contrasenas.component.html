@@ -1,35 +1,54 @@
 <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>Sitio</th>
-          <th>Usuario</th>
-          <th>Contraseña</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let contrasena of contrasenas">
-          <td>{{ contrasena.sitio }}</td>
-          <td>{{ contrasena.usuario }}</td>
-          <td>{{ obtenerContrasena(contrasena) }}</td>
-          <td>
-            <button mat-icon-button class="action-button" (click)="mostrarContrasena(contrasena)">
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button mat-icon-button class="action-button" (click)="modificar(contrasena)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button class="action-button" (click)="borrar(contrasena)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-icon-button class="action-button" (click)="copiarAlPortapapeles(contrasena)">
-              <mat-icon>content_copy</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p *ngIf="tiempoRestante > 0">Tiempo restante en el portapapeles: {{ tiempoRestante }} segundos</p>
-    <p id="idusuario">{{ idUserName }}</p>
+  <!-- Password Cards -->
+  <div class="password-grid">
+    <div class="password-card" *ngFor="let contrasena of contrasenas">
+      <h3>{{contrasena.sitio}}</h3>
+      <p>{{contrasena.usuario}}</p>
+      <p>{{contrasena.contrasena}}</p>
+      <p>{{contrasena.caducidad}}</p>
+      
+     
+      <button class="icon-btn delete-btn" (click)="eliminarContrasena(contrasena.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <button class="icon-btn edit-btn" (click)="editarContrasena(contrasena.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
+      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
+      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
+      
+    </div>
   </div>
+
+  <!-- Add Button -->
+  <button class="add-button" (click)="showModal = true">+</button>
+
+  <!-- Modal Form -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <form [formGroup]="passwordForm" (ngSubmit)="agregarContrasena()">
+        <h2>Nueva Contraseña</h2>
+        
+        <div class="form-group">
+          <input type="text" formControlName="sitio" placeholder="Sitio">
+        </div>
+        
+        <div class="form-group">
+          <input type="text" formControlName="usuario" placeholder="Usuario">
+        </div>
+        
+        <div class="form-group">
+          <input type="password" formControlName="contrasena" placeholder="Contraseña">
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="showModal = false">Cancelar</button>
+          <button type="submit" [disabled]="!passwordForm.valid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
