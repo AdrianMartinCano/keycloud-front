@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SnackbarActionComponent } from './snackbar-action/snackbar-action.component';
+import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { SnackbarActionComponent } from './snackbar-action/snackbar-action.compo
     ListaContrasenasComponent,
     SobreProyectoComponent,
     SnackbarActionComponent,
+    FooterComponent,
     
 
   ],

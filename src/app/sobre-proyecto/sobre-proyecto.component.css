@@ -1,14 +1,16 @@
 .container {
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh; /* Asegúrate de que el contenedor ocupe toda la altura de la ventana */
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;
+    margin-top: -80px; 
   }
   
   mat-card {
-    width: 90%; /* Ajusta el ancho del card según tus necesidades */
-    max-width: 800px; /* Ajusta el ancho máximo del card */
-    padding: 20px; /* Añade un poco de padding para que el contenido no esté pegado a los bordes */
-    box-sizing: border-box; /* Asegúrate de que el padding se incluya en el tamaño total del card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade una sombra ligera alrededor del card */
+    width: 90%; 
+    max-width: 1000px; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   }
+  
