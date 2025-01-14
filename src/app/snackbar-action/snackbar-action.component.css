@@ -1,12 +1,12 @@
 .snackbar-content {
     display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    justify-content: space-between; /* Espacia los elementos horizontalmente */
+    align-items: center; 
+    justify-content: space-between; 
   }
   
   .snackbar-actions {
     display: flex;
-    gap: 10px; /* Añade un margen entre los botones */
+    gap: 10px;
   }
   
   .snackbar-button {

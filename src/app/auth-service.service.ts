@@ -13,13 +13,10 @@ export class AuthServiceService {
   constructor(private http: HttpClient) { }
 
 
-  giveMePassword(idUserName: string): Observable<any[]> {
-    const url = 'http://localhost:8080/api/contrasenas/' + idUserName;
-    return this.http.get<any[]>(url);
-  }
+  private urlBase= 'http://localhost:8080/api/usuarios/';
 
   login(username: string, password: string): Observable<boolean> {
-    const url = 'http://localhost:8080/api/usuarios/login'; 
+    const url = this.urlBase + 'login'; 
     const body = { nombreUsuario: username, contraseña: password };
 
     
@@ -38,21 +35,19 @@ export class AuthServiceService {
       catchError(error => {
         console.error('Error en la autenticación:', error);
         this.idUserName = "-1";
-        return [false]; // Devuelve un valor observable por defecto en caso de error
+        return [false]; 
       })
     );
   }
 
   register(username: string, password: string, email: string): Observable<boolean> {
-    const url = 'http://localhost:8080/api/usuarios'; // Incluye el protocolo http://
+  
     const body = { nombreUsuario: username, passwd: password, email: email };
   
-   
-  
-    return this.http.post<any>(url, body).pipe(
+    return this.http.post<any>(this.urlBase, body).pipe(
       map(response => {
         console.log('Response:', response);
-        // Verifica si la respuesta es válida
+        
         if (response.id !== undefined && response.id !== -1) {
           this.loggedIn = true;
           return true;
@@ -65,11 +60,6 @@ export class AuthServiceService {
       })
     );
   }
-  
-
-
-
-
   logout() {
     this.loggedIn = false;
   }

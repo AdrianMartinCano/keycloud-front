@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BarraNavegacionComponent } from './barra-navegacion/barra-navegacion.component';
@@ -17,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SnackbarActionComponent } from './snackbar-action/snackbar-action.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +26,7 @@ import { FooterComponent } from './footer/footer.component';
     SobreProyectoComponent,
     SnackbarActionComponent,
     FooterComponent,
+    
     
 
   ],
@@ -39,7 +40,8 @@ import { FooterComponent } from './footer/footer.component';
     MatCardModule,
     HttpClientModule,
     MatSnackBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

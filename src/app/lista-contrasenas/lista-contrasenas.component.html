@@ -1,52 +1,99 @@
 <div class="container">
   <!-- Password Cards -->
   <div class="password-grid">
-    <div class="password-card" *ngFor="let contrasena of contrasenas">
-      <h3>{{contrasena.sitio}}</h3>
-      <p>{{contrasena.usuario}}</p>
-      <p>{{contrasena.contrasena}}</p>
-      <p>{{contrasena.caducidad}}</p>
-      
-     
-      <button class="icon-btn delete-btn" (click)="eliminarContrasena(contrasena.id)">
+    <div class="password-card" *ngFor="let contrasena of contrasenasMostrar">
+      <h3>{{contrasena.titulo}}</h3>
+      <p>{{contrasena.nombre_usuario}}</p>
+      <p (dblclick)="copiarAlPortapapeles(contrasena.contrasena)">
+        {{ visibilidadContrasenas[contrasena.id] ? contrasena.contrasena : '****' }}
+      </p>
+      <p>Caducidad: {{contrasena.fecha_caducidad | date:'dd/MM/yyyy'}}</p>
+      <p>{{contrasena.notas}}</p>
+
+      <button class="icon-btn delete-btn btn-control" (click)="eliminarContrasena(contrasena.id)"
+        title="Eliminar contraseña">
         <mat-icon>delete</mat-icon>
       </button>
 
-      <button class="icon-btn edit-btn" (click)="editarContrasena(contrasena.id)">
+      <button class="icon-btn edit-btn btn-control" (click)="editarContrasena(contrasena.id)" title="Editar contraseña">
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
-      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
-      <button class="btn" (click)="eliminarContrasena(contrasena.id)">×</button>
-      
+      <button class="show-button btn-control" (click)="mostrarContrasena(contrasena.id)" title="Mostrar contraseña">
+        <mat-icon>visibility</mat-icon>
+      </button>
     </div>
   </div>
 
-  <!-- Add Button -->
-  <button class="add-button" (click)="showModal = true">+</button>
 
-  <!-- Modal Form -->
-  <div class="modal" *ngIf="showModal">
+  <button class="add-button" (click)="mostrarModal = true">+</button>
+
+ 
+  <div class="modal" *ngIf="mostrarModal">
     <div class="modal-content">
       <form [formGroup]="passwordForm" (ngSubmit)="agregarContrasena()">
-        <h2>Nueva Contraseña</h2>
-        
+        <h2>{{ modoEditar ? 'Editar Contraseña' : 'Nueva Contraseña' }}</h2>
+  
         <div class="form-group">
-          <input type="text" formControlName="sitio" placeholder="Sitio">
+          <input type="text" formControlName="titulo" placeholder="Sitio">
         </div>
-        
+  
         <div class="form-group">
-          <input type="text" formControlName="usuario" placeholder="Usuario">
+          <input type="text" formControlName="nombre_usuario" placeholder="Usuario">
         </div>
-        
+  
+        <div class="password-generator">
+          <div class="form-group password-input">
+            <input class="contrasenaTexto" type="text" formControlName="contrasena" placeholder="Contraseña">
+            <button type="button" class="generate-btn" (click)="generarContrasena()">
+              <mat-icon>autorenew</mat-icon>
+            </button>
+          </div>
+  
+          <!-- Indicador de fortaleza -->
+          <div class="password-strength">
+            <div class="strength-bar">
+              <div class="strength-fill" [style.width.%]="passwordStrength" [ngClass]="getFortalezaClase()">
+              </div>
+            </div>
+            <span class="strength-text">{{getFortalezaTexto()}}</span>
+          </div>
+  
+          <!-- Opciones de contraseña -->
+          <div class="password-options">
+            <div class="length-control">
+              <label>Longitud: {{passwordForm.get('longitud')?.value}} caracteres</label>
+              <input type="range" formControlName="longitud" min="8" max="32" class="range-slider">
+            </div>
+  
+            <div class="options-grid">
+              <label>
+                <input type="checkbox" formControlName="incluirMayusculas">
+                Mayúsculas (A-Z)
+              </label>
+              <label>
+                <input type="checkbox" formControlName="incluirMinusculas">
+                Minúsculas (a-z)
+              </label>
+              <label>
+                <input type="checkbox" formControlName="incluirNumeros">
+                Números (0-9)
+              </label>
+              <label>
+                <input type="checkbox" formControlName="incluirSimbolos">
+                Símbolos (!#$%^&*)
+              </label>
+            </div>
+          </div>
+        </div>
+  
         <div class="form-group">
-          <input type="password" formControlName="contrasena" placeholder="Contraseña">
+          <input type="text" formControlName="notas" placeholder="Nota">
         </div>
-
+  
         <div class="form-actions">
-          <button type="button" (click)="showModal = false">Cancelar</button>
           <button type="submit" [disabled]="!passwordForm.valid">Guardar</button>
+          <button type="button" (click)="mostrarModal = false">Cancelar</button>
         </div>
       </form>
     </div>

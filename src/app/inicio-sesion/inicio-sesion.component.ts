@@ -21,13 +21,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ]
 })
 export class InicioSesionComponent {
-  // Variables para el formulario de login
+  
   loginData = {
     nombreUsuario: '',
     passwd: ''
   };
 
-  // Variables para el formulario de registro
   registerData = {
     nombreUsuario: '',
     email: '',
@@ -42,12 +41,11 @@ export class InicioSesionComponent {
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
-  ngOnInit(): void {
-    this.authService.logout();
-  }
+
+
   toggleForm() {
     this.isLoginActive = !this.isLoginActive;
-    // Limpiar los formularios al cambiar
+   
     this.loginData = {
       nombreUsuario: '',
       passwd: ''
@@ -87,7 +85,7 @@ export class InicioSesionComponent {
   }
 
   mostrarError(mensaje: string) {
-    // Limpiamos los campos del formulario
+    
     this.loginData = {
       nombreUsuario: '',
       passwd: ''
@@ -99,8 +97,6 @@ export class InicioSesionComponent {
   register() {
     if (this.registerData.passwd !== this.registerData.confirmPasswd) {
       this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', { duration: 2000 });
-    
-      
       return;
     }
 
@@ -122,7 +118,7 @@ export class InicioSesionComponent {
       }
     );
 
-    this.isLoginActive = true; // Cambia a modo login después del registro
+    this.isLoginActive = true; 
 
   }
 }

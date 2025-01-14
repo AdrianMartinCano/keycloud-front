@@ -18,7 +18,7 @@
 
     <!-- Formularios -->
     <div class="forms-container">
-      <!-- Login Form -->
+      <!-- Login -->
       <form [class.active]="isLoginActive" class="form login-form" (ngSubmit)="onSubmit($event)">
         <h2>Iniciar Sesión</h2>
         <div class="form-group">
@@ -43,7 +43,7 @@
         <p class="forgot-password">¿Olvidaste tu contraseña?</p>
       </form>
 
-      <!-- Register Form -->
+      <!-- Registrar -->
       <form [class.active]="!isLoginActive" class="form register-form" (ngSubmit)="onSubmit($event)">
         <h2>Crear Cuenta</h2>
         <div class="form-group">

@@ -6,7 +6,8 @@ import { ListaContrasenasComponent } from './lista-contrasenas/lista-contrasenas
 import { SobreProyectoComponent } from './sobre-proyecto/sobre-proyecto.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' }, // Ruta predeterminada
+  { 
+    path: '', redirectTo: '/inicio', pathMatch: 'full' }, 
   {
     path: 'inicio', component: InicioSesionComponent
   },
