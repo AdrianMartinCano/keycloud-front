@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Usuario } from './models/usuario';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
   private loggedIn: boolean = false;
   private idUserName: string = '';
-
+private username:string='';
   constructor(private http: HttpClient) { }
 
 
@@ -27,6 +28,7 @@ export class AuthServiceService {
         if (response.login) { // Si el login fue exitoso
           this.loggedIn = true;
           this.idUserName = response.login.idUsuario;
+          this.username=response.login.nombreUsuario;
           return true;
         }
         this.idUserName = "-1";
@@ -40,26 +42,12 @@ export class AuthServiceService {
     );
   }
 
-  register(username: string, password: string, email: string): Observable<boolean> {
-  
-    const body = { nombreUsuario: username, passwd: password, email: email };
-  
-    return this.http.post<any>(this.urlBase, body).pipe(
-      map(response => {
-        console.log('Response:', response);
-        
-        if (response.id !== undefined && response.id !== -1) {
-          this.loggedIn = true;
-          return true;
-        }
-       
-        return false;
-      }),
-      catchError(error => {
-        return of(false); // Usa `of` para emitir un valor observable válido
-      })
-    );
+    register(nombreUsuario: string, passwd: string, email: string): Observable<any> {
+    const body = { nombreUsuario, passwd, email };
+    return this.http.post<any>(`${this.urlBase}registrar`, body);
   }
+
+  
   logout() {
     this.loggedIn = false;
   }
@@ -70,5 +58,13 @@ export class AuthServiceService {
 
   getIdUserName(): string {
     return this.idUserName;
+  }
+
+  getUsername():string{
+    return this.username;
+  }
+
+  getUsuario(): Observable<Usuario> {
+    return this.http.get<Usuario>(this.urlBase + this.idUserName);
   }
 }

@@ -1,4 +1,44 @@
-nav {
-    width: 100%; /* Asegúrate de que el contenedor del SVG ocupe todo el ancho */
-    overflow: hidden; /* Opcional: para asegurarte de que no haya desbordamiento */
-  }
+.navbar-container {
+  background-color: white !important;
+  
+}
+
+.custom-toolbar {
+  background-color: white !important;
+
+  color: black !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  
+}
+
+.logo img {
+  vertical-align: middle;
+}
+
+.logo-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar a {
+  color: black !important;
+  
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+mat-toolbar a:hover {
+  text-decoration: underline;
+}
+.circle {
+  width: 40px;
+  height: 40px;
+  background-color: #6c63ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-left: 20px;
+  cursor: pointer;
+}

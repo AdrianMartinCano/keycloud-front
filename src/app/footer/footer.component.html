@@ -1,11 +1,12 @@
 <footer class="footer" *ngIf="mostrarFooter">
   <button class="close-btn" (click)="cerrarFooter()" title="Cerrar esta información">X</button>
   <div class="container">
-    <p>&copy; 2025 KeyCloud. Licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative
+    <p>&copy; 2025 KeyCloud. Licencia <a routerLink="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative
         Commons</a>.</p>
     <p>
-      <a href="/contacto">Contacto</a> |
-      <a href="/sobreProyecto">Sobre el proyecto</a>
+      <a routerLink="/contacto">Contacto</a> |
+      <a routerLink="/sobreProyecto">Sobre el proyecto</a> |
+      <a routerLink="/inicio">Página princial</a>
     </p>
   </div>
 </footer>

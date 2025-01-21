@@ -95,25 +95,20 @@ export class InicioSesionComponent {
   }
 
   register() {
-    if (this.registerData.passwd !== this.registerData.confirmPasswd) {
+    if (this.registerData.passwd != this.registerData.confirmPasswd) {
       this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', { duration: 2000 });
       return;
     }
-
-    
-
-
     this.authService.register(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email).subscribe(
-      success => {
-        if (success) {
+      response => {
+        console.log(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email);  
+        if (response && response.id) {
           this.snackBar.open('Usuario registrado con éxito', 'Cerrar', { duration: 2000 });
-        
         } else {
           this.mostrarError('Ha habido algún problema al registrar el usuario');
         }
       },
       error => {
-       
         this.mostrarError('Error en el servidor, intenta nuevamente más tarde.');
       }
     );

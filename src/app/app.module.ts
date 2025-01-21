@@ -17,6 +17,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SnackbarActionComponent } from './snackbar-action/snackbar-action.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { PerfilComponent } from './perfil/perfil.component';
+import {MatToolbarModule, } from '@angular/material/toolbar';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +32,7 @@ import { MatSliderModule } from '@angular/material/slider';
     SobreProyectoComponent,
     SnackbarActionComponent,
     FooterComponent,
+    PerfilComponent,
     
     
 
@@ -41,7 +48,10 @@ import { MatSliderModule } from '@angular/material/slider';
     HttpClientModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

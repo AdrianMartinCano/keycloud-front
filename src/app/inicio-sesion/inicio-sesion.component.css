@@ -4,7 +4,7 @@
     align-items: center;
     min-height: 100vh;
     background-color: #f8f9fa;
-    margin-top:-80px;
+    margin-top:-170px;
 }
 
 .auth-box {
@@ -15,6 +15,7 @@
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     overflow: hidden;
+    margin-top:150px;
 }
 
 .sliding-panel {
@@ -141,9 +142,22 @@
 }
 
 .forgot-password {
-    text-align: center;
-    margin-top: 1rem;
-    color: #666;
-    font-size: 0.875rem;
-    cursor: pointer;
+    position: absolute;
+    top: 80%;
+    left: 10%;
+  
+    transform: translate(55%, -180%);
+}
+
+.forgot-password a {
+    color: #6c63ff;
+  
+    text-decoration: solid;
+    /* Sin subrayado */
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+    color: #5b52cc;
+  
 }
