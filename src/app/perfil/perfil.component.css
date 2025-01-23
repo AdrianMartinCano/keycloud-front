@@ -1,36 +1,125 @@
 .perfil-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: calc(64px);
+    min-height: calc(75vh - 64px);
     background-color: #f8f9fa;
-    
+    padding: 20px;
+    margin-top: -50px;
 }
 
 .perfil-box {
-    position: relative;
-    width: 1000px;
-    height: 500px;
+    width: 800px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-top: 100px;
+    padding: 30px;
+    margin-top: 20px;
 }
 
-
-.header-datos-perfil{
-    text-align: center;
+.header-datos-perfil {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #6c63ff;
 }
 
-.perfil-box ul {
+.datos-list {
     list-style-type: none;
-    margin-left:50px;
     padding: 0;
 }
 
-.perfil-box li {
-    margin: 10px 0;
+.dato-item {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+.advertencia {
+    background-color: #f8d7da;
+    /* Color rojo suave para advertencia */
 }
 
+.dato-icon {
+    margin-right: 10px;
+}
 
+.dato-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dato-icon {
+    color: #6c63ff;
+    margin-right: 15px;
+}
+
+.dato-label {
+    font-weight: bold;
+    color: #666;
+    width: 180px;
+}
+
+.dato-value {
+    color: #333;
+    flex: 1;
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.btn-accion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c63ff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
+
+.btn-accion mat-icon {
+    margin-right: 5px;
+}
+
+.btn-accion:hover {
+    background-color: #3e3a99;
+}
+
+.btn-cambiar-pass {
+    background-color: #f8f9fa;
+    color: #6c63ff;
+    border: 1px solid #6c63ff;
+}
+
+.btn-cambiar-pass:hover {
+    background-color: #3e3a99;
+    color: white;
+}
+
+.btn-editar {
+    background-color: #6c63ff;
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #3e3a99;
+}
+input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

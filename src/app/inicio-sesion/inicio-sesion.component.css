@@ -63,7 +63,7 @@
 
 .panel-content button:hover {
     background: white;
-    color: #6c63ff;
+    color: #3e3a99;
 }
 
 .forms-container {
@@ -137,7 +137,7 @@
 }
 
 .form button:hover {
-    background: #5b52cc;
+    background: #3e3a99;
     
 }
 
@@ -158,6 +158,6 @@
 
 .forgot-password a:hover {
     text-decoration: underline;
-    color: #5b52cc;
+    color: #3e3a99;
   
 }

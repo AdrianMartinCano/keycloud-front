@@ -10,25 +10,25 @@ import { Usuario } from './models/usuario';
 export class AuthServiceService {
   private loggedIn: boolean = false;
   private idUserName: string = '';
-private username:string='';
+  private username:string='';
+  public usuario: Usuario = {} as Usuario;
   constructor(private http: HttpClient) { }
 
 
   private urlBase= 'http://localhost:8080/api/usuarios/';
 
-  login(username: string, password: string): Observable<boolean> {
-    const url = this.urlBase + 'login'; 
+    login(username: string, password: string): Observable<boolean> {
+    const url = this.urlBase + 'login';
     const body = { nombreUsuario: username, contraseña: password };
-
-    
 
     return this.http.post<any>(url, body).pipe(
       map(response => {
-        console.log('Response:', response);
-        if (response.login) { // Si el login fue exitoso
+      
+        if (response.login && response.login.usuario) { 
+          this.usuario = response.login.usuario;
           this.loggedIn = true;
-          this.idUserName = response.login.idUsuario;
-          this.username=response.login.nombreUsuario;
+          this.idUserName = response.login.usuario.id;
+          this.username = response.login.usuario.nombreUsuario;
           return true;
         }
         this.idUserName = "-1";
@@ -37,7 +37,7 @@ private username:string='';
       catchError(error => {
         console.error('Error en la autenticación:', error);
         this.idUserName = "-1";
-        return [false]; 
+        return of(false);
       })
     );
   }
@@ -62,6 +62,10 @@ private username:string='';
 
   getUsername():string{
     return this.username;
+  }
+
+  getUsuarioObject():Usuario{
+    return this.usuario;
   }
 
   getUsuario(): Observable<Usuario> {

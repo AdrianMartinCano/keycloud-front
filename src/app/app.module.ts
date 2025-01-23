@@ -33,9 +33,6 @@ import { MatMenuModule } from '@angular/material/menu';
     SnackbarActionComponent,
     FooterComponent,
     PerfilComponent,
-    
-    
-
   ],
   imports: [
     BrowserModule,
