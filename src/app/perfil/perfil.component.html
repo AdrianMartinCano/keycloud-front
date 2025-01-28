@@ -17,18 +17,19 @@
                 <input *ngIf="editandoPerfil" [(ngModel)]="usuario.email" />
             </li>
 
-            <li class="dato-item">
-                <mat-icon class="dato-icon">vpn_key</mat-icon>
-                <span class="dato-label">Contraseña de inicio de sesión:</span>
-                <span class="dato-value" *ngIf="!editandoPerfil">{{usuario.passwd}}</span>
-                <input *ngIf="editandoPerfil" [(ngModel)]="usuario.passwd" />
-            </li>
+        <li class="dato-item">
+            <mat-icon class="dato-icon">lock</mat-icon>
+            <span class="dato-label">Contraseña de inicio de sesión:</span>
+            <span class="dato-value" *ngIf="!editandoPerfil">••••••••</span>
+            <input *ngIf="editandoPerfil" [(ngModel)]="passwordActual" placeholder="Ingrese su contraseña" 
+                value="" />
+        </li>
 
             <li class="dato-item">
-                <mat-icon class="dato-icon">vpn_key</mat-icon>
+                <mat-icon class="dato-icon">lock</mat-icon>
                 <span class="dato-label">Nueva contraseña de inicio de sesión:</span>
                 <span class="dato-value" *ngIf="!editandoPerfil"></span>
-                <input *ngIf="editandoPerfil" [(ngModel)]="passwordNueva" />
+                <input *ngIf="editandoPerfil" [(ngModel)]="passwordNueva" placeholder="Ingrese nueva contraseña"  />
             </li>
 
            
@@ -37,9 +38,7 @@
 
 
         <div class="acciones">
-            <button class="btn-accion btn-cambiar-pass" (click)="cambiarContrasena()">
-                <mat-icon>lock</mat-icon> Cambiar contraseña
-            </button>
+           
             <button class="btn-accion btn-editar" (click)="toggleEditarPerfil()">
                 <mat-icon>edit</mat-icon> {{editandoPerfil ?  'Guardar Cambios' : 'Editar Perfil'}}
             </button>

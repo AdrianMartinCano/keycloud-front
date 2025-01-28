@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Contrasena } from './models/contrasena';
+import { UsuarioToken } from './models/UsuarioToken';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,6 @@ export class PasswordService {
 
       giveMePassword(idUserName: string): Observable<Contrasena[]> {
    const url = 'http://localhost:8080/api/contrasenas/' + idUserName;
-   
-    
     return this.http.get<any[]>(url);
   }
 
@@ -37,8 +36,19 @@ export class PasswordService {
 
   borrarPassword(id:number): Observable<Contrasena> {
     const url = 'http://localhost:8080/api/contrasenas/eliminar/' + id;
-    console.log(url);
     return this.http.get<any>(url);
   }
+
+usuarioPorEmail(email: string): Observable<any> {
+  const url = 'http://localhost:8080/api/usuarios/email/'+email;
+  return this.http.get<any>(url);
+}
+
+codigoRestauracion(codigo:string): Observable<any> {
+  const url = 'http://localhost:8080/api/usuarios/codigo/'+codigo;
+  return this.http.get<UsuarioToken>(url);
+}
+
+
 
 }

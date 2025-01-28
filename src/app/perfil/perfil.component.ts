@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../auth-service.service';
 import { Usuario } from '../models/usuario';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -10,79 +9,99 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
-  idUsuario: string = '';
   usuario: Usuario = {} as Usuario;
-  usuarioEditado: Usuario = {} as Usuario;
   editandoPerfil: boolean = false;
-  passwordNueva:string='';
-  constructor(
-    public authservice: AuthServiceService,
-    private snackBar: MatSnackBar
-  ) { }
+  passwordActual:string = ''; // Variable para la contraseña actual
+  passwordNueva: string = ''; // Variable para la nueva contraseña
+  constructor(public authservice: AuthServiceService, private snackBar: MatSnackBar) { }
 
- ngOnInit(): void {
-    this.authservice.getUsuario().subscribe(
-      (data: Usuario) => {
-        this.usuario = data;
-        this.usuarioEditado = { ...data }; // Inicializa la variable temporal con los datos actuales
-      },
-      error => {
-        console.error('Error al obtener el usuario:', error);
-        this.snackBar.open('Error al cargar los datos del usuario', 'Cerrar', {
-          duration: 3000
-        });
-      }
-    );
+  ngOnInit(): void {
+    this.cargarDatosUsuario();
   }
 
   cargarDatosUsuario() {
     this.authservice.getUsuario().subscribe(
       (data: Usuario) => {
+        console.log(data);
         this.usuario = data;
-        this.usuarioEditado = { ...data }; 
       },
       error => {
         console.error('Error al obtener el usuario:', error);
-        this.snackBar.open('Error al cargar los datos del usuario', 'Cerrar', {
+        this.snackBar.open('Error al cargar los datos del usuario. Inténtelo de nuevo más tarde', 'Cerrar', {
           duration: 3000
         });
       }
     );
   }
 
+toggleEditarPerfil(): void {
+  this.editandoPerfil = !this.editandoPerfil;
 
+  if (!this.editandoPerfil) {
+    this.manejadorActualizadorPassword();
+  } else {
+    this.resetearCamposPassword();
+  }
+}
 
+private manejadorActualizadorPassword(): void {
+  this.cargarDatosUsuario();
 
-
-  cambiarContrasena() {
-    // Aquí implementarías la lógica para cambiar la contraseña
-   
-    console.log('Cambiar contraseña');
+  if (!this.validarContrasenas()) {
+    return;
   }
 
+  if (this.sonIgualesPassword()) {
+    this.actualizarPasswordUsuario();
+  } else {
+    this.mostrarMensajeContrasenasIncorrectas();
+  }
+}
 
-  
+private validarContrasenas(): boolean {
+  if (!this.passwordActual || !this.passwordNueva) {
+    this.snackBar.open('Debes introducir ambas contraseñas', 'Cerrar', {
+      duration: 3000
+    });
+    return false;
+  }
+  return true;
+}
 
-  
-  toggleEditarPerfil(): void {
-    this.editandoPerfil = !this.editandoPerfil;
-    if (!this.editandoPerfil) {
-      // Si se desactiva el modo de edición, actualiza los datos originales
-      this.usuario = { ...this.usuarioEditado };
-      console.log("prueba password vieja");
-      console.log("hola"  + this.authservice.getUsuarioObject().passwd);
-      if(this.authservice.getUsuarioObject().passwd!=this.usuario.passwd){
-       console.log("la contraseña antigua es distinta");
+private sonIgualesPassword(): boolean {
+  return this.passwordActual === this.usuario.passwd;
+}
+
+private actualizarPasswordUsuario(): void {
+  this.usuario.passwd = this.passwordNueva;
+  this.authservice.actualizarUsuario(this.usuario).subscribe(
+    (data: Usuario) => {
+      if (data && data.id > 0) {
+        this.usuario = data;
+        this.snackBar.open('Contraseña actualizada correctamente', 'Cerrar', {
+          duration: 3000
+        });
       }
-      // if (this.passwordNueva) {
-        
-      //   this.usuario.passwd = this.passwordNueva;
-      //   this.passwordNueva = '';
-      //   this.snackBar.open('Perfil actualizado', 'Cerrar', {
-      //     duration: 3000
-      //   });
-      // }
+    },
+    error => {
+      this.snackBar.open('Error al actualizar los datos del usuario', 'Cerrar', {
+        duration: 3000
+      });
     }
-  }
+  );
+}
+
+private mostrarMensajeContrasenasIncorrectas(): void {
+  this.snackBar.open('Contraseña actual incorrecta', 'Cerrar', {
+    duration: 3000
+  });
+}
+
+private resetearCamposPassword(): void {
+  this.passwordActual = '';
+  this.passwordNueva = '';
+}
+
+
 
 }

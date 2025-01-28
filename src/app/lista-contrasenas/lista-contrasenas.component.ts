@@ -52,8 +52,9 @@ export class ListaContrasenasComponent implements OnInit {
 
  ngOnInit(): void {
   this.idUserName = this.authService.getIdUserName();
+  console.log(this.idUserName);
   this.passwordService.giveMePassword(this.idUserName).subscribe(passwords => {
-    console.log(passwords);  
+     
     this.contrasenasMostrar = passwords.map(password => {
       return {
         id: password.id,
@@ -128,7 +129,7 @@ export class ListaContrasenasComponent implements OnInit {
   }
 
 editarContrasena(id: number): void {
-  console.log('Evento click editar recibido, ID:', id);
+  
   const contrasena = this.contrasenasMostrar.find(c => c.id == id);
   if (contrasena) {
     this.passwordForm.patchValue({
@@ -150,7 +151,7 @@ editarContrasena(id: number): void {
   mostrarContrasena(id: number): void {
     this.snackBar.open('Contraseña visible durante 15 segundos', 'Cerrar', { duration: 15000 });
     this.visibilidadContrasenas[id] = !this.visibilidadContrasenas[id];
-    console.log(id);
+    
     if (this.visibilidadContrasenas[id]) {
       setTimeout(() => {
         this.visibilidadContrasenas[id] = false;
@@ -171,17 +172,14 @@ agregarContrasena(): void {
     };
 
     if (this.modoEditar) {
-      console.log('Editando contraseña:', nuevaContrasena);
-      console.log('Editando contraseña en el índice:', this.actualIdEditar);
+      
       const index = this.contrasenasMostrar.findIndex(c => c.id == this.actualIdEditar);
       if (index != -1) {
         nuevaContrasena.id = this.actualIdEditar;
-        console.log('Editando contraseña en el índice:', index);
-        console.log('Editando contraseña en el índice:', nuevaContrasena.id);
-        console.log(nuevaContrasena);
+       
         this.passwordService.editarPassword(nuevaContrasena as Contrasena).subscribe(
           (response) => {
-            console.log('Contraseña editada correctamente', response);
+            
             this.contrasenas[index] = response;
             this.contrasenasMostrar[index] = response;
             this.snackBar.open('Contraseña editada correctamente', 'Cerrar', { duration: 5000 });
@@ -194,7 +192,7 @@ agregarContrasena(): void {
     } else {
       this.passwordService.agregarPassword(nuevaContrasena as Contrasena).subscribe(
         (response) => {
-          console.log('Contraseña añadida correctamente', response);
+          
           this.contrasenas.push(response);
           this.contrasenasMostrar.push(response);
           this.snackBar.open('Contraseña añadida correctamente', 'Cerrar', { duration: 5000 });
@@ -245,7 +243,7 @@ eliminarContrasena(id: number): void {
   snackBarRef.onAction().subscribe(() => {
     this.passwordService.borrarPassword(id).subscribe(
       () => {
-        console.log('Contraseña eliminada');
+        
         this.contrasenas = this.contrasenas.filter(c => c.id !== id);
         this.contrasenasMostrar = this.contrasenasMostrar.filter(c => c.id !== id);
         this.snackBar.open('Contraseña eliminada', 'Cerrar', { duration: 2000 });

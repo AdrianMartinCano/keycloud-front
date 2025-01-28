@@ -19,9 +19,9 @@ import { FooterComponent } from './footer/footer.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { PerfilComponent } from './perfil/perfil.component';
 import {MatToolbarModule, } from '@angular/material/toolbar';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { RestaurarComponent } from './restaurar/restaurar.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
     SnackbarActionComponent,
     FooterComponent,
     PerfilComponent,
+    RestaurarComponent,
   ],
   imports: [
     BrowserModule,

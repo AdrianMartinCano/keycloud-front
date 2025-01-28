@@ -161,3 +161,6 @@
     color: #3e3a99;
   
 }
+.invalid {
+    border-color: red;
+}

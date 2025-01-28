@@ -1,4 +1,4 @@
-.perfil-container {
+.restuarar-container {
     display: flex;
     justify-content: center;
     min-height: calc(75vh - 64px);
@@ -7,7 +7,7 @@
     margin-top: -50px;
 }
 
-.perfil-box {
+.restuarar-box {
     width: 800px;
     background: white;
     border-radius: 8px;
@@ -16,7 +16,7 @@
     margin-top: 20px;
 }
 
-.header-datos-perfil {
+.header-datos-restuarar {
     color: #333;
     font-size: 24px;
     margin-bottom: 30px;
@@ -40,14 +40,7 @@
 }
 
 
-.dato-icon {
-    margin-right: 10px;
-}
 
-.dato-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
 
 .dato-icon {
     color: #6c63ff;
@@ -65,7 +58,7 @@
     flex: 1;
 }
 
-.acciones {
+.restaurar-btn {
     display: flex;
     justify-content: flex-end;
     margin-top: 30px;
@@ -95,28 +88,10 @@
     background-color: #3e3a99;
 }
 
-.btn-cambiar-pass {
-    background-color: #f8f9fa;
-    color: #6c63ff;
-    border: 1px solid #6c63ff;
-}
-
-.btn-cambiar-pass:hover {
-    background-color: #3e3a99;
-    color: white;
-}
-
-.btn-editar {
-    background-color: #6c63ff;
-    color: white;
-}
-
-.btn-editar:hover {
-    background-color: #3e3a99;
-}
 input {
     flex: 1;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-left: 5px;
 }

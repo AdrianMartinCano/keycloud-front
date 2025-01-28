@@ -21,7 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ]
 })
 export class InicioSesionComponent {
-  
+   emailValido: boolean = true;
   loginData = {
     nombreUsuario: '',
     passwd: ''
@@ -68,6 +68,18 @@ export class InicioSesionComponent {
     }
   }
 
+  validarEmail(email: string): boolean {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
+    return re.test(String(email).toLowerCase());
+  }
+
+  onEmailBlur() {
+    this.emailValido = this.validarEmail(this.registerData.email);
+    if (!this.emailValido) {
+      this.snackBar.open('Por favor, introduce un email válido', 'Cerrar', { duration: 3000 });
+    }
+  }
+
   login() {
     this.authService.login(this.loginData.nombreUsuario, this.loginData.passwd).subscribe(
       success => {
@@ -90,7 +102,7 @@ export class InicioSesionComponent {
       nombreUsuario: '',
       passwd: ''
     };
-    this.snackBar.open(mensaje, 'Cerrar', { duration: 2000 });
+    this.snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
     
   }
 
@@ -99,13 +111,25 @@ export class InicioSesionComponent {
       this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', { duration: 2000 });
       return;
     }
+    if(!this.validarEmail(this.registerData.email)){
+      this.snackBar.open('El correo no tiene un formato correcto', 'Cerrar', { duration: 2000 });
+      this.emailValido = false;
+      return;
+    }
+
+    
     this.authService.register(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email).subscribe(
-      response => {
-        console.log(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email);  
-        if (response && response.id) {
+       data => {
+        console.log(data);
+        if (data && data.usuario && data.usuario.nombreUsuario!=null) {
           this.snackBar.open('Usuario registrado con éxito', 'Cerrar', { duration: 2000 });
-        } else {
-          this.mostrarError('Ha habido algún problema al registrar el usuario');
+           this.isLoginActive = true;
+          return;
+        }
+        
+        if (data.error && data.error.descripcion && data.error.codigo) {
+          this.mostrarError(data.error.descripcion);
+          return;
         }
       },
       error => {
@@ -113,7 +137,7 @@ export class InicioSesionComponent {
       }
     );
 
-    this.isLoginActive = true; 
+ 
 
   }
 }

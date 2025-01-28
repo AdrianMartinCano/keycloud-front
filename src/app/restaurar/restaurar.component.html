@@ -1,0 +1,61 @@
+<div class="restuarar-container">
+    <div class="restuarar-box">
+        <h1 class="header-datos-restuarar">Restaurar Contraseña</h1>
+
+        <ul class="datos-list">
+            <li class="dato-item">
+                <mat-icon class="dato-icon">email</mat-icon>
+                <span class="dato-label">Email:</span>
+                <input *ngIf="etapaRestauracion === 'email'" [(ngModel)]="email" placeholder="Introduce tu email"
+                    [disabled]="etapaRestauracion !== 'email'" />
+                <span *ngIf="etapaRestauracion !== 'email'" class="dato-value">{{email}}</span>
+            </li>
+
+            <li class="dato-item" *ngIf="etapaRestauracion !== 'email'">
+                <mat-icon class="dato-icon">lock</mat-icon>
+                <span class="dato-label">Código de verificación:</span>
+                <input *ngIf="etapaRestauracion === 'codigo'" [(ngModel)]="codigo" placeholder="Introduce el código"
+                    [disabled]="etapaRestauracion !== 'codigo'" />
+                <span *ngIf="etapaRestauracion === 'password' || etapaRestauracion === 'completado'"
+                    class="dato-value">{{codigo}}</span>
+            </li>
+
+            <li class="dato-item" *ngIf="etapaRestauracion === 'password' || etapaRestauracion === 'completado'">
+                <mat-icon class="dato-icon">lock</mat-icon>
+                <span class="dato-label">Nueva contraseña:</span>
+                <input *ngIf="etapaRestauracion === 'password'" type="password" [(ngModel)]="nuevaPassword"
+                    placeholder="Introduce nueva contraseña" />
+                <span *ngIf="etapaRestauracion === 'completado'" class="dato-value">••••••••</span>
+            </li>
+
+            <li class="dato-item" *ngIf="etapaRestauracion === 'password' || etapaRestauracion === 'completado'">
+                <mat-icon class="dato-icon">lock</mat-icon>
+                <span class="dato-label">Confirmar contraseña:</span>
+                <input *ngIf="etapaRestauracion === 'password'" type="password" [(ngModel)]="confirmPassword"
+                    placeholder="Confirma la nueva contraseña" />
+                <span *ngIf="etapaRestauracion === 'completado'" class="dato-value">••••••••</span>
+            </li>
+        </ul>
+
+        <div class="restaurar-btn">
+            <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'email'" (click)="enviarEmail()">
+                <mat-icon>send</mat-icon> Enviar Código
+            </button>
+
+            <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'codigo'" (click)="verificarCodigo()">
+                <mat-icon>verified</mat-icon> Verificar Código
+            </button>
+
+            <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'password'"
+                (click)="restaurarPassword()">
+                <mat-icon>refresh</mat-icon> Restaurar Contraseña
+            </button>
+            <button class="btn-accion btn-editar"  *ngIf="etapaRestauracion === 'completado'" (click)="volverInicio()">
+                    <mat-icon>home</mat-icon> Volver al Inicio
+            </button>
+            
+
+
+        </div>
+    </div>
+</div>

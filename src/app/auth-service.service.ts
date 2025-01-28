@@ -23,7 +23,7 @@ export class AuthServiceService {
 
     return this.http.post<any>(url, body).pipe(
       map(response => {
-      
+        console.log(response);
         if (response.login && response.login.usuario) { 
           this.usuario = response.login.usuario;
           this.loggedIn = true;
@@ -46,6 +46,13 @@ export class AuthServiceService {
     const body = { nombreUsuario, passwd, email };
     return this.http.post<any>(`${this.urlBase}registrar`, body);
   }
+
+
+  actualizarUsuario(usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.urlBase}modificar`, usuario);
+    
+  }
+
 
   
   logout() {
