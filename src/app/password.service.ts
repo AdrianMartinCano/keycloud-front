@@ -5,22 +5,18 @@ import { Contrasena } from './models/contrasena';
 import { UsuarioToken } from './models/UsuarioToken';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PasswordService {
-
   private idUser: string = '';
-   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
+  setIdUser(idUser: string) {
+    this.idUser = idUser;
+  }
 
-
-
-   setIdUser(idUser: string){
-      this.idUser = idUser;
-    }
-
-      giveMePassword(idUserName: string): Observable<Contrasena[]> {
-   const url = 'http://localhost:8080/api/contrasenas/' + idUserName;
+  giveMePassword(idUserName: string): Observable<Contrasena[]> {
+    const url = 'http://localhost:8080/api/contrasenas/' + idUserName;
     return this.http.get<any[]>(url);
   }
 
@@ -29,26 +25,29 @@ export class PasswordService {
     return this.http.post<any>(url, contrasena);
   }
 
-  editarPassword(contrasena:Contrasena): Observable<Contrasena> {
+  editarPassword(contrasena: Contrasena): Observable<Contrasena> {
     const url = 'http://localhost:8080/api/contrasenas/modificar';
     return this.http.post<any>(url, contrasena);
   }
 
-  borrarPassword(id:number): Observable<Contrasena> {
+  borrarPassword(id: number): Observable<Contrasena> {
     const url = 'http://localhost:8080/api/contrasenas/eliminar/' + id;
     return this.http.get<any>(url);
   }
 
-usuarioPorEmail(email: string): Observable<any> {
-  const url = 'http://localhost:8080/api/usuarios/email/'+email;
-  return this.http.get<any>(url);
-}
+  usuarioPorEmail(email: string): Observable<any> {
+    const url = 'http://localhost:8080/api/usuarios/email/' + email;
+    return this.http.get<any>(url);
+  }
 
-codigoRestauracion(codigo:string): Observable<any> {
-  const url = 'http://localhost:8080/api/usuarios/codigo/'+codigo;
-  return this.http.get<UsuarioToken>(url);
-}
+  codigoRestauracion(codigo: string): Observable<any> {
+    const url = 'http://localhost:8080/api/usuarios/codigo/' + codigo;
+    return this.http.get<UsuarioToken>(url);
+  }
 
-
-
+  nuevaPassword(usuario: UsuarioToken): Observable<UsuarioToken> {
+    console.log("en el servicio", usuario);
+    const url = 'http://localhost:8080/api/usuarios/nuevaPassword';
+    return this.http.put<UsuarioToken>(url, usuario);
+  }
 }

@@ -22,7 +22,8 @@ export class ListaContrasenasComponent implements OnInit {
   visibilidadContrasenas: { [key: number]: boolean } = {};
   passwordForm: FormGroup;
   passwordStrength: number = 0;
-
+ searchTerm: string = '';
+  contrasenasFiltradas: Contrasena[] = [];
   constructor(
     private authService: AuthServiceService,
     public encriptador: EncriptacionService,
@@ -50,12 +51,12 @@ export class ListaContrasenasComponent implements OnInit {
     });
   }
 
- ngOnInit(): void {
+ngOnInit(): void {
   this.idUserName = this.authService.getIdUserName();
   console.log(this.idUserName);
   this.passwordService.giveMePassword(this.idUserName).subscribe(passwords => {
-     
-    this.contrasenasMostrar = passwords.map(password => {
+    // Guardamos en ambos arrays
+    this.contrasenas = passwords.map(password => {
       return {
         id: password.id,
         idusuario: password.idusuario,
@@ -67,6 +68,26 @@ export class ListaContrasenasComponent implements OnInit {
         fecha_caducidad: password.fecha_caducidad ? new Date(password.fecha_caducidad).toISOString() : undefined
       };
     });
+    // Hacemos una copia para mostrar
+    this.contrasenasMostrar = [...this.contrasenas];
+  });
+}
+onSearch(event: any): void {
+  const searchValue = event.target.value.toLowerCase().trim();
+  
+  if (!searchValue) {
+    // Si está vacío, mostramos todas
+    this.contrasenasMostrar = [...this.contrasenas];
+    return;
+  }
+
+  // Filtramos sobre el array original
+  this.contrasenasMostrar = this.contrasenas.filter(contrasena => {
+    return (
+      (contrasena.titulo?.toLowerCase().includes(searchValue)) ||
+      (contrasena.nombre_usuario?.toLowerCase().includes(searchValue)) ||
+      (contrasena.url?.toLowerCase().includes(searchValue))
+    );
   });
 }
 
@@ -182,6 +203,12 @@ agregarContrasena(): void {
             
             this.contrasenas[index] = response;
             this.contrasenasMostrar[index] = response;
+            //Si cuando hemos editado o añadido, miramos si hay un término de búsqueda
+            //Si lo hay, volvemos a buscar con el término actual
+            if(this.searchTerm){
+              this.onSearch({target: {value: this.searchTerm}});
+            }
+
             this.snackBar.open('Contraseña editada correctamente', 'Cerrar', { duration: 5000 });
           },
           (error) => {
@@ -255,4 +282,29 @@ eliminarContrasena(id: number): void {
     );
   });
 }
+estaProximaACaducar(fecha_caducidad: string | undefined): boolean {
+  if (!fecha_caducidad) {
+    console.log('No hay fecha de caducidad');
+    return false;
+  }
+  
+  const fechaCaducidad = new Date(fecha_caducidad);
+  const ahora = new Date();
+  
+  // Agregamos logs para debug
+  console.log('Fecha de caducidad:', fechaCaducidad);
+  console.log('Fecha actual:', ahora);
+  
+  const diferenciaDias = Math.floor(
+    (fechaCaducidad.getTime() - ahora.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  
+  console.log('Diferencia en días:', diferenciaDias);
+  const estaProxima = diferenciaDias <= 7;
+  console.log('¿Está próxima a caducar?:', estaProxima);
+  
+  return estaProxima;
+}
+
+
 }

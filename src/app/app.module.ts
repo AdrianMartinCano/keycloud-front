@@ -22,7 +22,7 @@ import {MatToolbarModule, } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { RestaurarComponent } from './restaurar/restaurar.component';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +49,8 @@ import { RestaurarComponent } from './restaurar/restaurar.component';
     MatSliderModule,
     MatToolbarModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

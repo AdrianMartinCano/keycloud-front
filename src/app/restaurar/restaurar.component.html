@@ -38,8 +38,12 @@
         </ul>
 
         <div class="restaurar-btn">
-            <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'email'" (click)="enviarEmail()">
-                <mat-icon>send</mat-icon> Enviar Código
+            <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'email'" (click)="enviarEmail()"
+                [disabled]="isLoading">
+                <mat-icon *ngIf="!isLoading">send</mat-icon>
+                <mat-spinner *ngIf="isLoading" diameter="20"  [color]="'accent'" class="spinner"></mat-spinner>
+                <span *ngIf="!isLoading">Enviar Código</span>
+                <span *ngIf="isLoading">Enviando Código</span>
             </button>
 
             <button class="btn-accion btn-editar" *ngIf="etapaRestauracion === 'codigo'" (click)="verificarCodigo()">

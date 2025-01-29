@@ -1,7 +1,15 @@
 <div class="container">
   <!-- Password Cards -->
+  <div class="search-container">
+    <div class="search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" [(ngModel)]="searchTerm" (input)="onSearch($event)"
+        placeholder="Buscar por título, usuario o URL...">
+    </div>
+  </div>
   <div class="password-grid">
-    <div class="password-card" *ngFor="let contrasena of contrasenasMostrar">
+    <div class="password-card" *ngFor="let contrasena of contrasenasMostrar"
+      [ngClass]="{'password-card-expiring': estaProximaACaducar(contrasena.fecha_caducidad)}" #passwordCard>
       <h3>{{contrasena.titulo}}</h3>
       <p>{{contrasena.nombre_usuario}}</p>
       <p (dblclick)="copiarAlPortapapeles(contrasena.contrasena)">
@@ -28,20 +36,20 @@
 
   <button class="add-button" (click)="mostrarModal = true">+</button>
 
- 
+
   <div class="modal" *ngIf="mostrarModal">
     <div class="modal-content">
       <form [formGroup]="passwordForm" (ngSubmit)="agregarContrasena()">
         <h2>{{ modoEditar ? 'Editar Contraseña' : 'Nueva Contraseña' }}</h2>
-  
+
         <div class="form-group">
           <input type="text" formControlName="titulo" placeholder="Sitio">
         </div>
-  
+
         <div class="form-group">
           <input type="text" formControlName="nombre_usuario" placeholder="Usuario">
         </div>
-  
+
         <div class="password-generator">
           <div class="form-group password-input">
             <input class="contrasenaTexto" type="text" formControlName="contrasena" placeholder="Contraseña">
@@ -49,7 +57,7 @@
               <mat-icon>autorenew</mat-icon>
             </button>
           </div>
-  
+
           <!-- Indicador de fortaleza -->
           <div class="password-strength">
             <div class="strength-bar">
@@ -58,14 +66,14 @@
             </div>
             <span class="strength-text">{{getFortalezaTexto()}}</span>
           </div>
-  
+
           <!-- Opciones de contraseña -->
           <div class="password-options">
             <div class="length-control">
               <label>Longitud: {{passwordForm.get('longitud')?.value}} caracteres</label>
               <input type="range" formControlName="longitud" min="8" max="32" class="range-slider">
             </div>
-  
+
             <div class="options-grid">
               <label>
                 <input type="checkbox" formControlName="incluirMayusculas">
@@ -86,11 +94,11 @@
             </div>
           </div>
         </div>
-  
+
         <div class="form-group">
           <input type="text" formControlName="notas" placeholder="Nota">
         </div>
-  
+
         <div class="form-actions">
           <button type="submit" [disabled]="!passwordForm.valid">Guardar</button>
           <button type="button" (click)="mostrarModal = false">Cancelar</button>

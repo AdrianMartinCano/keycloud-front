@@ -4,7 +4,7 @@
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
-  
+
 }
 
 .password-grid {
@@ -35,7 +35,7 @@
 }
 
 
-.btn-control{
+.btn-control {
   position: absolute;
   background: none;
   border: none;
@@ -46,7 +46,7 @@
 }
 
 .delete-btn {
- 
+
   right: 65px;
 }
 
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -103,7 +103,7 @@
   max-height: 90%;
 
   overflow-y: auto;
-  
+
 }
 
 .form-group {
@@ -231,6 +231,50 @@
   height: 16px;
 }
 
-.contrasenaTexto{
+.contrasenaTexto {
   max-width: 98%;
+}
+
+.search-container {
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.search-box {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #212529;
+  margin-left: 10px;
+}
+
+.search-icon {
+  color: #6c757d;
+}
+
+.search-box:focus-within {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.1);
+}
+
+.password-card.password-card-expiring {
+  background-color: #ffebeb !important;
+  border: 1px solid #dc3545 !important;
+}
+
+.password-card.password-card-expiring h3 {
+  color: #dc3545 !important;
 }
