@@ -7,40 +7,36 @@
                 <mat-icon class="dato-icon">person</mat-icon>
                 <span class="dato-label">Usuario:</span>
                 <span class="dato-value" *ngIf="!editandoPerfil">{{usuario.nombreUsuario}}</span>
-                <input *ngIf="editandoPerfil" [(ngModel)]="usuario.nombreUsuario" />
+                <input *ngIf="editandoPerfil" [(ngModel)]="usuario.nombreUsuario" required />
             </li>
 
             <li class="dato-item">
                 <mat-icon class="dato-icon">email</mat-icon>
                 <span class="dato-label">Email:</span>
                 <span class="dato-value" *ngIf="!editandoPerfil">{{usuario.email}}</span>
-                <input *ngIf="editandoPerfil" [(ngModel)]="usuario.email" />
+                <input *ngIf="editandoPerfil" [(ngModel)]="usuario.email" required />
             </li>
 
-        <li class="dato-item">
-            <mat-icon class="dato-icon">lock</mat-icon>
-            <span class="dato-label">Contraseña de inicio de sesión:</span>
-            <span class="dato-value" *ngIf="!editandoPerfil">••••••••</span>
-            <input *ngIf="editandoPerfil" [(ngModel)]="passwordActual" placeholder="Ingrese su contraseña" 
-                value="" />
-        </li>
+            <li class="dato-item">
+                <mat-icon class="dato-icon">lock</mat-icon>
+                <span class="dato-label">Contraseña de inicio de sesión:</span>
+                <span class="dato-value" *ngIf="!editandoPerfil">••••••••</span>
+                <input *ngIf="editandoPerfil" [(ngModel)]="passwordActual" placeholder="Ingrese su contraseña"
+                    required />
+            </li>
 
             <li class="dato-item">
                 <mat-icon class="dato-icon">lock</mat-icon>
                 <span class="dato-label">Nueva contraseña de inicio de sesión:</span>
-                <span class="dato-value" *ngIf="!editandoPerfil"></span>
-                <input *ngIf="editandoPerfil" [(ngModel)]="passwordNueva" placeholder="Ingrese nueva contraseña"  />
+                <input *ngIf="editandoPerfil" [(ngModel)]="passwordNueva" placeholder="Ingrese nueva contraseña"
+                    required />
             </li>
-
-           
-           
         </ul>
 
-
         <div class="acciones">
-           
-            <button class="btn-accion btn-editar" (click)="toggleEditarPerfil()">
-                <mat-icon>edit</mat-icon> {{editandoPerfil ?  'Guardar Cambios' : 'Editar Perfil'}}
+            <button class="btn-accion btn-editar" (click)="toggleEditarPerfil()"
+                [disabled]="editandoPerfil && (!usuario.nombreUsuario || !usuario.email || !passwordActual || !passwordNueva)">
+                <mat-icon>edit</mat-icon> {{editandoPerfil ? 'Guardar Cambios' : 'Editar Perfil'}}
             </button>
         </div>
     </div>

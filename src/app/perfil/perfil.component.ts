@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../auth-service.service';
 import { Usuario } from '../models/usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EncriptacionService } from '../encriptacion.service';
 
 @Component({
   selector: 'app-perfil',
@@ -11,9 +12,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PerfilComponent implements OnInit {
   usuario: Usuario = {} as Usuario;
   editandoPerfil: boolean = false;
-  passwordActual:string = ''; // Variable para la contraseña actual
-  passwordNueva: string = ''; // Variable para la nueva contraseña
-  constructor(public authservice: AuthServiceService, private snackBar: MatSnackBar) { }
+  passwordActual:string = ''; 
+  passwordNueva: string = ''; 
+  constructor(public authservice: AuthServiceService, private snackBar: MatSnackBar, private encriptador: EncriptacionService) { }
 
   ngOnInit(): void {
     this.cargarDatosUsuario();
@@ -22,7 +23,6 @@ export class PerfilComponent implements OnInit {
   cargarDatosUsuario() {
     this.authservice.getUsuario().subscribe(
       (data: Usuario) => {
-        console.log(data);
         this.usuario = data;
       },
       error => {
@@ -69,11 +69,12 @@ private validarContrasenas(): boolean {
 }
 
 private sonIgualesPassword(): boolean {
-  return this.passwordActual === this.usuario.passwd;
+  return this.encriptador.encriptar(this.passwordActual) === this.usuario.passwd;
 }
 
 private actualizarPasswordUsuario(): void {
   this.usuario.passwd = this.passwordNueva;
+  this.usuario.passwd = this.encriptador.encriptar(this.usuario.passwd);
   this.authservice.actualizarUsuario(this.usuario).subscribe(
     (data: Usuario) => {
       if (data && data.id > 0) {

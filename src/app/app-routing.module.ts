@@ -5,6 +5,7 @@ import { ListaContrasenasComponent } from './lista-contrasenas/lista-contrasenas
 import { SobreProyectoComponent } from './sobre-proyecto/sobre-proyecto.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { RestaurarComponent } from './restaurar/restaurar.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' }, 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'sobreProyecto', component: SobreProyectoComponent },
   { path:'perfil', component: PerfilComponent },
   { path: 'restaurarContrasena', component: RestaurarComponent},
+  {path: 'contacto', component: ContactoComponent},
   { path:'**', component: InicioSesionComponent}
   
 ];

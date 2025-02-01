@@ -6,9 +6,9 @@
         <h3>{{ isLoginActive ? '¿Eres nuevo?' : '¡Bienvenido de vuelta!' }}</h3>
         <p>
           {{ isLoginActive ?
-             'Regístrate y comienza a gestionar tus contraseñas de forma segura' :
-             'Inicia sesión para acceder a tus contraseñas guardadas'
-           }}
+          'Regístrate y comienza a gestionar tus contraseñas de forma segura' :
+          'Inicia sesión para acceder a tus contraseñas guardadas'
+          }}
         </p>
         <button (click)="toggleForm()">
           {{ isLoginActive ? 'Crear cuenta' : 'Iniciar sesión' }}
@@ -19,67 +19,64 @@
     <!-- Formularios -->
     <div class="forms-container">
       <!-- Login -->
-      <form [class.active]="isLoginActive" class="form login-form" (ngSubmit)="onSubmit($event)">
+      <form [class.active]="isLoginActive" class="form login-form" (ngSubmit)="onSubmit($event)" #loginForm="ngForm">
         <h2>Iniciar Sesión</h2>
         <div class="form-group">
-          <input 
-            type="email" 
-            placeholder="Nombre de usuario" 
-            [(ngModel)]="loginData.nombreUsuario" 
-            name="nombreUsuario" 
-            #usernameInput
-          />
+          <input type="email" placeholder="Nombre de usuario" [(ngModel)]="loginData.nombreUsuario" name="nombreUsuario"
+            #usernameInput="ngModel" required />
+          <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error">El nombre de usuario no puede estar
+            en blanco</div>
         </div>
         <div class="form-group">
-          <input 
-            type="password" 
-            placeholder="Contraseña" 
-            [(ngModel)]="loginData.passwd" 
-            name="password" 
-            #passwordInput
-          />
+          <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.passwd" name="password"
+            #passwordInput="ngModel" required />
+          <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">La contraseña no puede estar en
+            blanco</div>
         </div>
-        <button type="submit">Entrar</button>
+        <button type="submit" [disabled]="!loginForm.valid">Entrar</button>
         <div class="forgot-password">
           <a routerLink="/restaurarContrasena">¿Olvidaste tu contraseña?</a>
         </div>
       </form>
 
       <!-- Registrar -->
-      <form [class.active]="!isLoginActive" class="form register-form" (ngSubmit)="onSubmit($event)">
+      <form [class.active]="!isLoginActive" class="form register-form" (ngSubmit)="onSubmit($event)"
+        #registerForm="ngForm">
         <h2>Crear Cuenta</h2>
         <div class="form-group">
-          <input 
-            type="text" 
-            placeholder="Nombre de usuario" 
-            [(ngModel)]="registerData.nombreUsuario" 
-            name="nombreUsuario" 
-            #usernameRegister
-          />
+          <input type="text" placeholder="Nombre de usuario" [(ngModel)]="registerData.nombreUsuario"
+            name="nombreUsuario" #usernameRegister="ngModel" required />
+          <div *ngIf="usernameRegister.invalid && usernameRegister.touched" class="error">El nombre de usuario no puede
+            estar en blanco
+          </div>
         </div>
         <div class="form-group">
-        <input type="email" placeholder="Correo electrónico" [(ngModel)]="registerData.email" name="email"
-          (blur)="onEmailBlur()" [class.invalid]="!emailValido && registerData.email" />
+          <input type="email" placeholder="Correo electrónico" [(ngModel)]="registerData.email" name="email"
+            (blur)="onEmailBlur()" [class.invalid]="!emailValido && registerData.email" #emailRegister="ngModel"
+            required />
+          <div *ngIf="emailRegister.invalid && emailRegister.touched" class="error">El email no puede estar en blanco
+          </div>
         </div>
         <div class="form-group">
-          <input 
-            type="password" 
-            placeholder="Contraseña" 
-            [(ngModel)]="registerData.passwd" 
-            name="password" 
-            #passwordRegister
-          />
+          <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.passwd" name="password"
+            #passwordRegister="ngModel" required />
+          <div *ngIf="passwordRegister.invalid && passwordRegister.touched" class="error">La contraseña no puede estar
+            en blanco
+          </div>
         </div>
         <div class="form-group">
-          <input 
-            type="password" 
-            placeholder="Confirmar contraseña" 
-            [(ngModel)]="registerData.confirmPasswd"
-            name="confirmPassword"
-            #passwordRepeatRegister
-          />
+          <input type="password" placeholder="Confirmar contraseña" [(ngModel)]="registerData.confirmPasswd"
+            name="confirmPassword" #passwordRepeatRegister="ngModel" required />
+          <div *ngIf="passwordRepeatRegister.invalid && passwordRepeatRegister.touched" class="error">La contraseña no
+            puede estar en blanco</div>
         </div>
-        <button type="submit">{{ isLoginActive ? 'Iniciar Sesión' : 'Registrarse' }}</button>
+        <div class="acciones">
+          <button class="btn-accion btn-enviar" type="submit" [disabled]="estaCargando || !registerForm.valid">
+            <mat-icon *ngIf="!estaCargando">send</mat-icon>
+            <mat-spinner *ngIf="estaCargando" diameter="20"></mat-spinner>
+            Registrarse
+          </button>
+        </div>
       </form>
     </div>
   </div>

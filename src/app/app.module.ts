@@ -22,7 +22,8 @@ import {MatToolbarModule, } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { RestaurarComponent } from './restaurar/restaurar.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ContactoComponent } from './contacto/contacto.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FooterComponent,
     PerfilComponent,
     RestaurarComponent,
+    ContactoComponent,
   ],
   imports: [
     BrowserModule,

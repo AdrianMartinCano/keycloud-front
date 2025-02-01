@@ -13,7 +13,7 @@
       <h3>{{contrasena.titulo}}</h3>
       <p>{{contrasena.nombre_usuario}}</p>
       <p (dblclick)="copiarAlPortapapeles(contrasena.contrasena)">
-        {{ visibilidadContrasenas[contrasena.id] ? contrasena.contrasena : '****' }}
+        {{ visibilidadContrasenas[contrasena.id] ? encriptador.desencriptar(contrasena.contrasena) : '****' }}
       </p>
       <p>Caducidad: {{contrasena.fecha_caducidad | date:'dd/MM/yyyy'}}</p>
       <p>{{contrasena.notas}}</p>
@@ -33,27 +33,25 @@
     </div>
   </div>
 
-
   <button class="add-button" (click)="mostrarModal = true">+</button>
-
 
   <div class="modal" *ngIf="mostrarModal">
     <div class="modal-content">
       <form [formGroup]="passwordForm" (ngSubmit)="agregarContrasena()">
-        <h2>{{ modoEditar ? 'Editar Contraseña' : 'Nueva Contraseña' }}</h2>
+        <h2 class="titulo">{{ modoEditar ? 'Editar Contraseña' : 'Nueva Contraseña' }}</h2>
 
         <div class="form-group">
-          <input type="text" formControlName="titulo" placeholder="Sitio">
+          <input type="text" formControlName="titulo" placeholder="Sitio" required>
         </div>
 
         <div class="form-group">
-          <input type="text" formControlName="nombre_usuario" placeholder="Usuario">
+          <input type="text" formControlName="nombre_usuario" placeholder="Usuario" required>
         </div>
 
         <div class="password-generator">
           <div class="form-group password-input">
-            <input class="contrasenaTexto" type="text" formControlName="contrasena" placeholder="Contraseña">
-            <button type="button" class="generate-btn" (click)="generarContrasena()">
+            <input class="contrasenaTexto" type="text" formControlName="contrasena" placeholder="Contraseña" required>
+            <button type="button" class="generate-btn" (click)="generarContrasena()" title="Generar contraseña">
               <mat-icon>autorenew</mat-icon>
             </button>
           </div>
@@ -71,7 +69,7 @@
           <div class="password-options">
             <div class="length-control">
               <label>Longitud: {{passwordForm.get('longitud')?.value}} caracteres</label>
-              <input type="range" formControlName="longitud" min="8" max="32" class="range-slider">
+              <input type="range" formControlName="longitud" min="8" max="32" class="range-slider" required>
             </div>
 
             <div class="options-grid">
@@ -99,9 +97,19 @@
           <input type="text" formControlName="notas" placeholder="Nota">
         </div>
 
+        <!-- Campo de fecha de caducidad -->
+        <div class="form-group">
+          <label class="fecha-caducidad-label">Si la contraseña a guardar tiene fecha de caducidad, intróducela.</label>
+          <input type="date" formControlName="fecha_caducidad" placeholder="Fecha de caducidad">
+          <p class="error"
+            *ngIf="passwordForm.get('fecha_caducidad')?.invalid && passwordForm.get('fecha_caducidad')?.touched">
+            La fecha de caducidad es obligatoria.
+          </p>
+        </div>
+
         <div class="form-actions">
           <button type="submit" [disabled]="!passwordForm.valid">Guardar</button>
-          <button type="button" (click)="mostrarModal = false">Cancelar</button>
+          <button type="button" (click)="cancelarFormulario()">Cancelar</button>
         </div>
       </form>
     </div>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { EncriptacionService } from '../encriptacion.service';
 @Component({
   selector: 'app-inicio-sesion',
   templateUrl: './inicio-sesion.component.html',
@@ -35,17 +35,18 @@ export class InicioSesionComponent {
   };
 
   isLoginActive = true;
+  estaCargando:boolean=false;
 
   constructor(
     private authService: AuthServiceService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private encriptacion: EncriptacionService
   ) { }
 
 
   toggleForm() {
     this.isLoginActive = !this.isLoginActive;
-   
     this.loginData = {
       nombreUsuario: '',
       passwd: ''
@@ -81,6 +82,8 @@ export class InicioSesionComponent {
   }
 
   login() {
+    this.loginData.passwd = this.encriptacion.encriptar(this.loginData.passwd);
+ 
     this.authService.login(this.loginData.nombreUsuario, this.loginData.passwd).subscribe(
       success => {
         if (success) {
@@ -99,7 +102,7 @@ export class InicioSesionComponent {
   mostrarError(mensaje: string) {
     
     this.loginData = {
-      nombreUsuario: '',
+      nombreUsuario: this.loginData.nombreUsuario,
       passwd: ''
     };
     this.snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
@@ -117,10 +120,13 @@ export class InicioSesionComponent {
       return;
     }
 
+    this.estaCargando = true;
+ 
+   
     
-    this.authService.register(this.registerData.nombreUsuario, this.registerData.passwd, this.registerData.email).subscribe(
+    this.authService.register(this.registerData.nombreUsuario, this.encriptacion.encriptar(this.registerData.passwd), this.registerData.email).subscribe(
        data => {
-        console.log(data);
+        this.estaCargando = false;
         if (data && data.usuario && data.usuario.nombreUsuario!=null) {
           this.snackBar.open('Usuario registrado con éxito', 'Cerrar', { duration: 2000 });
            this.isLoginActive = true;
@@ -133,11 +139,9 @@ export class InicioSesionComponent {
         }
       },
       error => {
+        this.estaCargando=false;
         this.mostrarError('Error en el servidor, intenta nuevamente más tarde.');
       }
     );
-
- 
-
   }
 }

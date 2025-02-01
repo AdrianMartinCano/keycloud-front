@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { PasswordService } from '../password.service';
 import { UsuarioToken } from '../models/UsuarioToken';
-
+import { EncriptacionService } from '../encriptacion.service';
 @Component({
   selector: 'app-restaurar',
   templateUrl: './restaurar.component.html',
@@ -35,7 +35,8 @@ export class RestaurarComponent {
   constructor(
     private passwordService: PasswordService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private encriptacion: EncriptacionService
   ) {}
 
   volverInicio() {
@@ -66,7 +67,6 @@ export class RestaurarComponent {
         } else if (data) {
           this.usuarioAux = {...data};
           this.valorToken = data.resetTokens.token;
-          console.log(this.valorToken);
           this.etapaRestauracion = 'codigo';
           this.snackBar.open('Se ha enviado un código por email, debes introducirlo.','Cerrar',
             { duration: 3000 }
@@ -106,6 +106,7 @@ restaurarPassword() {
   if (this.nuevaPassword === this.confirmPassword && this.nuevaPassword.trim().length > 0) {
     this.isLoading = true;
     this.usuarioAux.passwd = this.nuevaPassword;
+    this.usuarioAux.passwd = this.encriptacion.encriptar(this.usuarioAux.passwd);
     this.passwordService.nuevaPassword(this.usuarioAux).subscribe(
       (data: UsuarioToken) => {
         this.isLoading = false;

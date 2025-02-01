@@ -23,7 +23,6 @@ export class AuthServiceService {
 
     return this.http.post<any>(url, body).pipe(
       map(response => {
-        console.log(response);
         if (response.login && response.login.usuario) { 
           this.usuario = response.login.usuario;
           this.loggedIn = true;

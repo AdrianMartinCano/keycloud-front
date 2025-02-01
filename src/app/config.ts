@@ -1,3 +1,3 @@
 export const CONFIG = {
-  secretKey: '1234321'
+  secretKey: 'aaaabbbbccccdddd' // Clave secreta para encriptar y desencriptar
 };

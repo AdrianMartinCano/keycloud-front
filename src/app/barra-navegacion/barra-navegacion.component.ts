@@ -21,7 +21,6 @@ export class BarraNavegacionComponent {
   }
 
   logout() {
-    // Lógica para cerrar sesión
     this.authService.logout();
     this.router.navigate(['/inicio']);
   }

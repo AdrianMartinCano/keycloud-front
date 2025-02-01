@@ -24,10 +24,13 @@ export class ListaContrasenasComponent implements OnInit {
   passwordStrength: number = 0;
  searchTerm: string = '';
   contrasenasFiltradas: Contrasena[] = [];
+
+ mostrarPlaceholder = true;
   constructor(
     private authService: AuthServiceService,
     public encriptador: EncriptacionService,
     private snackBar: MatSnackBar,
+   
     private fb: FormBuilder,
     public dialog: MatDialog,
     private passwordService:PasswordService
@@ -43,7 +46,9 @@ export class ListaContrasenasComponent implements OnInit {
       incluirMayusculas: [true],
       incluirMinusculas: [true],
       incluirNumeros: [true],
-      incluirSimbolos: [false]
+      incluirSimbolos: [false],
+      fecha_caducidad: [''], 
+      
     });
 
     this.passwordForm.get('contrasena')?.valueChanges.subscribe(value => {
@@ -53,7 +58,7 @@ export class ListaContrasenasComponent implements OnInit {
 
 ngOnInit(): void {
   this.idUserName = this.authService.getIdUserName();
-  console.log(this.idUserName);
+  
   this.passwordService.giveMePassword(this.idUserName).subscribe(passwords => {
     // Guardamos en ambos arrays
     this.contrasenas = passwords.map(password => {
@@ -62,7 +67,7 @@ ngOnInit(): void {
         idusuario: password.idusuario,
         titulo: password.titulo,
         nombre_usuario: password.nombre_usuario,
-        contrasena: password.contrasena,
+        contrasena: this.encriptador.desencriptar(password.contrasena),
         url: password.url,
         notas: password.notas,
         fecha_caducidad: password.fecha_caducidad ? new Date(password.fecha_caducidad).toISOString() : undefined
@@ -156,7 +161,7 @@ editarContrasena(id: number): void {
     this.passwordForm.patchValue({
       titulo: contrasena.titulo,
       nombre_usuario: contrasena.nombre_usuario,
-      contrasena: contrasena.contrasena,
+      contrasena: this.encriptador.desencriptar(contrasena.contrasena),
       url: contrasena.url,
       notas: contrasena.notas
     });
@@ -181,30 +186,38 @@ editarContrasena(id: number): void {
   }
 
 agregarContrasena(): void {
+
+  
+  
   if (this.passwordForm.valid) {
     const nuevaContrasena: Partial<Contrasena> = {
       idusuario: this.idUserName,
       titulo: this.passwordForm.value.titulo,
       nombre_usuario: this.passwordForm.value.nombre_usuario,
-      contrasena: this.passwordForm.value.contrasena,
+      contrasena: this.encriptador.encriptar(this.passwordForm.value.contrasena),
       url: this.passwordForm.value.url,
       notas: this.passwordForm.value.notas,
-      fecha_caducidad: new Date().toISOString() 
+      
     };
-
+    
+    if(this.passwordForm.value.fecha_caducidad){
+      
+      nuevaContrasena.fecha_caducidad=new Date(this.passwordForm.value.fecha_caducidad).toISOString();
+    }
+ 
+   
     if (this.modoEditar) {
       
       const index = this.contrasenasMostrar.findIndex(c => c.id == this.actualIdEditar);
       if (index != -1) {
         nuevaContrasena.id = this.actualIdEditar;
-       
+      
         this.passwordService.editarPassword(nuevaContrasena as Contrasena).subscribe(
           (response) => {
             
             this.contrasenas[index] = response;
             this.contrasenasMostrar[index] = response;
-            //Si cuando hemos editado o añadido, miramos si hay un término de búsqueda
-            //Si lo hay, volvemos a buscar con el término actual
+            
             if(this.searchTerm){
               this.onSearch({target: {value: this.searchTerm}});
             }
@@ -225,6 +238,7 @@ agregarContrasena(): void {
           this.snackBar.open('Contraseña añadida correctamente', 'Cerrar', { duration: 5000 });
         },
         (error) => {
+         
           console.error('Error al agregar la contraseña:', error);
         }
       );
@@ -284,27 +298,20 @@ eliminarContrasena(id: number): void {
 }
 estaProximaACaducar(fecha_caducidad: string | undefined): boolean {
   if (!fecha_caducidad) {
-    console.log('No hay fecha de caducidad');
     return false;
   }
-  
   const fechaCaducidad = new Date(fecha_caducidad);
   const ahora = new Date();
-  
-  // Agregamos logs para debug
-  console.log('Fecha de caducidad:', fechaCaducidad);
-  console.log('Fecha actual:', ahora);
-  
   const diferenciaDias = Math.floor(
     (fechaCaducidad.getTime() - ahora.getTime()) / (1000 * 60 * 60 * 24)
   );
-  
-  console.log('Diferencia en días:', diferenciaDias);
-  const estaProxima = diferenciaDias <= 7;
-  console.log('¿Está próxima a caducar?:', estaProxima);
-  
+  const estaProxima = diferenciaDias <= 7;    
   return estaProxima;
 }
 
+cancelarFormulario(){
+  this.passwordForm.reset();
+  this.mostrarModal = false;
+}
 
 }

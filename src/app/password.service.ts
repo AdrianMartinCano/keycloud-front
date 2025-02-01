@@ -46,7 +46,6 @@ export class PasswordService {
   }
 
   nuevaPassword(usuario: UsuarioToken): Observable<UsuarioToken> {
-    console.log("en el servicio", usuario);
     const url = 'http://localhost:8080/api/usuarios/nuevaPassword';
     return this.http.put<UsuarioToken>(url, usuario);
   }

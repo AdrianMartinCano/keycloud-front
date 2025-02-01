@@ -1,0 +1,50 @@
+<div class="contacto-container">
+    <div class="contacto-box">
+        <h1 class="header-datos-contacto">Datos del perfil</h1>
+
+        <ul>
+            <li class="dato-item">
+                <mat-icon class="dato-icon">email</mat-icon>
+                <span class="dato-label">Email:</span>
+                <span class="dato-value">
+                    <input type="text" placeholder="Tu email" required [(ngModel)]="contacto.email" name="email"
+                        class="form-input" (blur)="onEmailBlur()" [class.invalid]="!emailValido && contacto.email">
+                    <div *ngIf="!emailValido && contacto.email" class="error">El email no es válido</div>
+                </span>
+            </li>
+            <li class="dato-item">
+                <mat-icon class="dato-icon">person</mat-icon>
+                <span class="dato-label">Nombre:</span>
+                <span class="dato-value">
+                    <input type="text" placeholder="Tu nombre" required [(ngModel)]="contacto.nombre" name="nombre"
+                        class="form-input">
+                </span>
+            </li>
+            <li class="dato-item">
+                <mat-icon class="dato-icon">subject</mat-icon>
+                <span class="dato-label">Asunto:</span>
+                <span class="dato-value">
+                    <input type="text" placeholder="Introduce el tema del asunto que quieras tratar" required
+                        [(ngModel)]="contacto.asunto" name="asunto" class="form-input">
+                </span>
+            </li>
+            <li class="dato-item">
+                <mat-icon class="dato-icon">message</mat-icon>
+                <span class="dato-label">Mensaje:</span>
+                <span class="dato-value">
+                    <textarea placeholder="Tu mensaje" required [(ngModel)]="contacto.mensaje" name="mensaje"
+                        class="form-input" maxlength="800"></textarea>
+                    <div class="char-counter">{{ 800 - contacto.mensaje.length }} caracteres restantes</div>
+                </span>
+            </li>
+        </ul>
+        <div class="acciones">
+            <button class="btn-accion btn-enviar" (click)="enviarMensaje()"
+                [disabled]="estaCargando || !contacto.email || !contacto.nombre || !contacto.asunto || !contacto.mensaje">
+                <mat-icon *ngIf="!estaCargando">send</mat-icon>
+                <mat-spinner *ngIf="estaCargando" diameter="20"></mat-spinner>
+                Enviar mensaje
+            </button>
+        </div>
+    </div>
+</div>
