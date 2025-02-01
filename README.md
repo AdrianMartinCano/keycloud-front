@@ -40,9 +40,9 @@ Esto abrirá automáticamente el proyecto en tu navegador.
 Si deseas contribuir al proyecto, ¡siéntete libre de abrir un **pull request**!
 
 ## Tecnologías usadas
-**Angular:** Framework principal para la interfaz de usuario.
-**TypeScript:** Lenguaje de programación utilizado para estructurar el código.
-**Node.js:** Entorno de ejecución para ejecutar los comandos de desarrollo.
+** - Angular:** Framework principal para la interfaz de usuario.
+** - TypeScript:** Lenguaje de programación utilizado para estructurar el código.
+** - Node.js:** Entorno de ejecución para ejecutar los comandos de desarrollo.
 
 ## Tecnologías usadas
 Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto conmigo a través de [LinkedIn](https://www.linkedin.com/in/adrian-martin-cano/)
