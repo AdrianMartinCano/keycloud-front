@@ -13,7 +13,7 @@ Dentro de la carpeta `/src`, crea un archivo llamado **`config.ts`** con el sigu
 
 ```
 export const CONFIG = {
-  secretKey: 'aaaabbbbccccdddd' // Clave secreta para encriptar y desencriptar
+  secretKey: 'aaaabbbbccccdddd' // Debe tener 16 dígitos
 };
 ```
 ### 2. Alternativa: Escribir la clave directamente en encriptacion.service.ts
