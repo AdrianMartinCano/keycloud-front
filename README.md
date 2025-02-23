@@ -44,6 +44,6 @@ Si deseas contribuir al proyecto, ¡siéntete libre de abrir un **pull request**
 - **TypeScript:** Lenguaje de programación utilizado para estructurar el código.
 - **Node.js:** Entorno de ejecución para ejecutar los comandos de desarrollo.
 
-## Tecnologías usadas
+## Contacto
 Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto conmigo a través de [LinkedIn](https://www.linkedin.com/in/adrian-martin-cano/)
 
